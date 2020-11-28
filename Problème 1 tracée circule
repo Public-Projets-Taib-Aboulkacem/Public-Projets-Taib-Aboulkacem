@@ -1,12 +1,14 @@
 <?php
-/*taib aboulkacem , Début de projet et 12/08/2020, je le publie le 27/11/2020, le problème et du tracée un circule sur le navigateur en utilisation code PHP , deffculte  que je trouve leurs de création c'est erreur de trouver les valeurs exacte de fonction du circule */
+/*taib aboulkacem , Début de projet et 12/08/2020, je le publie le 27/11/2020,
+le problème et du tracée un circule sur le navigateur en utilisation code PHP ,
+deffculte  que je trouve leurs de création c'est erreur de trouver les valeurs exacte de fonction du circule */
 function trace_cercle($R,$col1,$col2,$erer){
 echo "<div>";
  $var=0;$var1=0;
-$a=$R;$b=$R;$lon=1;/$erer=1;/$plus=0.01;$maxdiv=0;
+$a=$R;$b=$R;$lon=1;/*$erer=1;*/$plus=0.01;$maxdiv=0;
      for($j=($R*2);$j>=0;$j=$j-$plus){$maxdiv++;
 	    for($i=0;$i<=($R*2);$i=$i+$plus){
-          $OM=($i-$a)($i-$a)+($j-$b)($j-$b);
+          $OM=($i-$a)*($i-$a)+($j-$b)*($j-$b);
 		    if($OM <= ($R*$R) && $OM >= ($R*$R)-$erer){
 				if($i<=($R*2) && $j<=($R*2) && $i>=0 && $j>=0 ){
                   if($i>=$R){
@@ -24,7 +26,7 @@ $a=$R;$b=$R;$lon=1;/$erer=1;/$plus=0.01;$maxdiv=0;
   $a=$R;$b=$R;$lon=((($R*2)/$maxdiv)*39.3);
      for($j=($R*2);$j>=0;$j=$j-$plus){ echo "<div style='display:inline-flex;' >";$go2=0;$go1=0;$long=0;
 	    for($i=0;$i<=($R*2);$i=$i+$plus){
-          $OM=($i-$a)($i-$a)+($j-$b)($j-$b);
+          $OM=($i-$a)*($i-$a)+($j-$b)*($j-$b);
 		    if($OM <= ($R*$R) && $OM >= ($R*$R)-$erer){
 				if($i<=($R*2) && $j<=($R*2) && $i>=0 && $j>=0 ){
                  if($i>=$R){
@@ -52,4 +54,3 @@ $a=$R;$b=$R;$lon=1;/$erer=1;/$plus=0.01;$maxdiv=0;
 	  }
 echo "</div>";
 }
-?>
