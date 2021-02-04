@@ -13,7 +13,7 @@ typedef struct employe
 	double salaire;
 }employe;
 
-int gestion_affichage(int *Numbre_employ,employe *Table_employe){
+int max_char_affichage(int *Numbre_employ,employe *Table_employe){
     if( (*Numbre_employ) == 0 ){
     	return 0;
     }else{
@@ -22,23 +22,18 @@ int gestion_affichage(int *Numbre_employ,employe *Table_employe){
     	while( i != (*Numbre_employ) ){ inisial--; i++; }
     	int max_=0,p;
     	for( i=0;i<=((*Numbre_employ)-1 );i++ ){
-    		p=0;
-    		while((inisial->nom[p]) != '\0'){
-    			p++;
-			}if(max_ < p ){ max_ = p ;}p=0;
-    		p=0;
-    		while((inisial->prenom[p]) != '\0'){
-    			p++;
-			}if(max_ < p ){ max_ = p ;}p=0;
-    		p=0;
-    		while((inisial->cin[p]) != '\0'){
-    			p++;
-			}if(max_ < p ){ max_ = p ;}p=0;
+    		p=strlen(inisial->nom);
+            if(max_ < p ){ max_ = p ;}p=0;
+    		p=strlen(inisial->prenom);
+            if(max_ < p ){ max_ = p ;}p=0;
+    		p=strlen(inisial->cin);
+            if(max_ < p ){ max_ = p ;}p=0;
 	       inisial++;
 		}
 		return max_ ;
 	}	
 }
+
 int nombre_salaire_sup(int *Numbre_employ,employe *Table_employe){
     if( (*Numbre_employ) == 0 ){
     	return 0;
@@ -54,10 +49,29 @@ int nombre_salaire_sup(int *Numbre_employ,employe *Table_employe){
 		   }
 	       inisial++;
 		}
-		printf("+--------------------------------------------------------------------+\n| le nombre d\'employes ayant le salaire superieur a 5000 dhs est : %d|\n+--------------------------------------------------------------------+\n",nombre);
-		
+		printf("+--------------------------------------------------------------------+\n|le nombre d\'employes ayant le salaire superieur a 5000 dhs est : %d|\n+--------------------------------------------------------------------+\n",nombre);
 	}	
 }
+
+int atteint_age_retraite(int *Numbre_employ,employe *Table_employe){
+    if( (*Numbre_employ) == 0 ){
+    	return 0;
+    }else{
+    	employe *inisial=Table_employe;
+    	int i=0;
+    	while( i != (*Numbre_employ) ){ inisial--; i++; }
+		system("cls");
+		int nombre=0;
+    	for( i=0;i<=((*Numbre_employ)-1 );i++ ){
+		   if((inisial->age) > 60 ){
+		   	 nombre++;
+		   }
+	       inisial++;
+		}
+		printf("+--------------------------------------------------------------------+\n| le nombre d\'employes qui ont atteint l\'age de la retraite est :%d|\n+--------------------------------------------------------------------+\n",nombre);
+	}	
+}
+
 int saisie_employe(employe *Un_employe){
 	system("cls");
 	printf("1 : saisie le nom d\'employe.\n");
@@ -73,6 +87,7 @@ int saisie_employe(employe *Un_employe){
 	printf("5 : saisie le salaire d\'employe en DH.\n");
 	scanf("%lf",&(Un_employe->salaire));
 }
+
 double moyenne_salaires(int *Numbre_employ,employe *Table_employe){
     if( (*Numbre_employ) == 0 ){
     	return 0;
@@ -86,10 +101,11 @@ double moyenne_salaires(int *Numbre_employ,employe *Table_employe){
 	       summe=summe+inisial->salaire;
 	       inisial++;
 		}
-		printf("+---------------------------------------+\n|la moyenne des salaires est : %lf DH|\n+---------------------------------------+\n",moyenne(summe,(*Numbre_employ)));
+		printf("+------------------------------------+\n|la moyenne des salaires est : %lf DH|\n+------------------------------------+\n",moyenne(summe,(*Numbre_employ)));
 		return moyenne(summe,(*Numbre_employ));
 	}	
 }
+
 double moyenne_ages(int *Numbre_employ,employe *Table_employe){
     if( (*Numbre_employ) == 0 ){
     	return 0;
@@ -107,15 +123,17 @@ double moyenne_ages(int *Numbre_employ,employe *Table_employe){
 		return moyenne(summe,(*Numbre_employ));
 	}	
 }
-int gestion_collen(int max_char,char a[max],int condition,double nombre){
+
+int gestion_affichage(int max_char,char a[max],int condition,double nombre){
 	int p=0,i;
 	if(condition == 1 ){
 		printf("%lf",nombre);for(i=0;i<=max_char-9;i++){printf(" ");}printf("|");
 	}else{
-      while( a[p] != '\0'){ p++; }
+      p=strlen(a);
 	  printf("%s",a);for(i=0;i<=max_char-p;i++){printf(" ");}printf("|");		
 	}
 }
+
 int affichage_tableau_employe(int *Numbre_employ,employe *Table_employe){
     if( (*Numbre_employ) == 0 ){
     	return 0;
@@ -124,26 +142,32 @@ int affichage_tableau_employe(int *Numbre_employ,employe *Table_employe){
     	int i=0,k,j;
     	while( i != (*Numbre_employ) ){ inisial--; i++; }
 		system("cls");
-		int max_char=gestion_affichage(Numbre_employ,Table_employe);
-		printf("같같같같# l\'affichage des employes #같같같같\n");
+		int max_char=max_char_affichage(Numbre_employ,Table_employe);
+		printf("째째째째째째째째# l\'affichage des employes #째째째째째째째째\n");
 		if( max_char < 10 ){max_char = 10 ;}
 		
 		for( i=0;i<=4;i++ ){for( j=0;j<=max_char;j++ ){printf("-");}printf("+");}printf("\n");
-		gestion_collen(max_char,"| Nom",0,0);gestion_collen(max_char,"prenom",0,0);gestion_collen(max_char,"CIN",0,0);gestion_collen(max_char,"AGES",0,0);gestion_collen(max_char,"salaire",0,0);printf("\n");
+		gestion_affichage(max_char,"| Nom",0,0);
+		gestion_affichage(max_char,"prenom",0,0);
+		gestion_affichage(max_char,"CIN",0,0);
+		gestion_affichage(max_char,"AGES",0,0);
+		gestion_affichage(max_char,"salaire",0,0);
+		printf("\n");
         for( i=0;i<=4;i++ ){for( j=0;j<=max_char;j++ ){printf("-");}printf("+");}printf("\n");
 		for( i=0;i<=((*Numbre_employ)-1 );i++ ){
 			
 		printf("|");
-		gestion_collen(max_char-1,inisial->nom,0,0);
-		gestion_collen(max_char,inisial->prenom,0,0);
-		gestion_collen(max_char,inisial->cin,0,0);
-		gestion_collen(max_char,"d",1,inisial->age);
-		gestion_collen(max_char,"e",1,inisial->salaire);printf("\n");
+		gestion_affichage(max_char-1,inisial->nom,0,0);
+		gestion_affichage(max_char,inisial->prenom,0,0);
+		gestion_affichage(max_char,inisial->cin,0,0);
+		gestion_affichage(max_char,"d",1,inisial->age);
+		gestion_affichage(max_char,"e",1,inisial->salaire);printf("\n");
            for( k=0;k<=4;k++ ){for( j=0;j<=max_char;j++ ){printf("-");}printf("+");}printf("\n");
 	       inisial++;
 		}
 	}
 }
+
 int saisie_tableau_employe(int *Numbre_employ,employe *Table_employe){
 	int fini=4,Premier_saisie=1;
 	employe *inisial=Table_employe;
@@ -179,14 +203,13 @@ int saisie_tableau_employe(int *Numbre_employ,employe *Table_employe){
 	}
 	system("cls");fini=4;
 	  while( !(fini >= 0 && 2 > fini) ){system("cls");
-	  	int c=strlen("0 : Pour ajeuter un employe au tableau tapi sur 0 .");
-	  	  gestion_collen(c,"|같같같같같같같같같같같같같같같같같같같같같같같같같�",0,0);printf("\n");
-	  	  gestion_collen(c,"|0 : Pour ajeuter un employe au tableau tapi sur 0 .",0,0);printf("\n");
-	  	  gestion_collen(c,"|같같같같같같같같같같같같같같같같같같같같같같같같같�",0,0);printf("\n");
-	  	  gestion_collen(c,"|1 : Si termini tapi sur 1 :",0,0);printf("\n");
-	  	  gestion_collen(c,"|같같같같같같같같같같같같같같같같같같같같같같같같같�",0,0);printf("\n");
-	  	  gestion_collen(c,"|_Donnee un chois :_________________________________",0,0);printf("\n");
-		  //printf("0 : Pour ajeuter un employe au tableau tapi sur 0 .\n1 : Si termini tapi sur 1 :\n");
+	  	int c=strlen("0 : Pour ajouter un employe au tableau tapi sur 0 .");
+	  	  gestion_affichage(c,"|째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째",0,0);printf("\n");
+	  	  gestion_affichage(c,"|0 : Pour ajouter un employe au tableau tapi sur 0 .",0,0);printf("\n");
+	  	  gestion_affichage(c,"|째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째",0,0);printf("\n");
+	  	  gestion_affichage(c,"|1 : Si termini tapi sur 1 :",0,0);printf("\n");
+	  	  gestion_affichage(c,"|째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째",0,0);printf("\n");
+	  	  gestion_affichage(c,"|_Donnee un chois :_________________________________",0,0);printf("\n");
 		  scanf("%d",&fini);
 	  }	
 	}
@@ -195,9 +218,9 @@ int saisie_tableau_employe(int *Numbre_employ,employe *Table_employe){
 int affichage_employe(employe *Un_employe){
 	system("cls");
 	if(Un_employe->nom == NULL ){
-		
+		return 0;
 	}else{
-	  printf("같같같같# l\'affichage des employes #같같같같\n");
+	  printf("째째째째째째째째# l\'affichage des employes #째째째째째째째째\n");
 	printf("1 : le nom d\'employe est :    [%s].\n",Un_employe->nom);
 	printf("2 : le prenom d\'employe est : [%s].\n",Un_employe->prenom);
 	printf("3 : le CIN d\'employe est :    [%s].\n",Un_employe->cin);
@@ -210,19 +233,19 @@ int Menu(int *Numbre_employ,employe *Table_employe,employe *Un_employe){
 	int chois=0;
 	while( !(chois >= 1 && 10 > chois) ){
 		int c=strlen("7 : le nombre d\'employes ayant le salaire superieur a 5000 dhs.");
-	 gestion_collen(c,"|같같같같같같같같같같같같같같# Menu #같같같같같같같같같같같같같�",0,0);printf("\n");    
-     gestion_collen(c,"|1 : saisie d\'un employe.",0,0);printf("\n");
-     gestion_collen(c,"|2 : l\'affichage d\'un employe.",0,0);printf("\n");
-     gestion_collen(c,"|_________________# un tableau des employes #___________________",0,0);printf("\n");
-     gestion_collen(c,"|3 : la saisie d\'un tableau d\'employes.",0,0);printf("\n");
-	 gestion_collen(c,"|4 : l\'affichage du tableau d\'employes.",0,0);printf("\n");
-     gestion_collen(c,"|5 : la moyenne des salaires.",0,0);printf("\n");
-     gestion_collen(c,"|6 : la moyenne des ages.",0,0);printf("\n");
-     gestion_collen(c,"|7 : le nombre d\'employes ayant le salaire superieur a 5000 dhs.",0,0);printf("\n");
-     gestion_collen(c,"|8 : le nombre d\'employes qui ont atteint l\'age de la retraite.",0,0);printf("\n");
-     gestion_collen(c,"|같같같같같같같같같같같같같같같같같같같같같같같같같같같같같같같�",0,0);printf("\n");
-     gestion_collen(c,"|9 : exite .",0,0);printf("\n");
-     gestion_collen(c,"|_Donnee un chois :_____________________________________________",0,0);printf("\n");
+	 gestion_affichage(c,"|째째째째째째째째째째째째째째째째째째째째째째째째째째째째# Menu #째째째째째째째째째째째째째째째째째째째째째째째째째째째",0,0);printf("\n");    
+     gestion_affichage(c,"|1 : saisie d\'un employe.",0,0);printf("\n");
+     gestion_affichage(c,"|2 : l\'affichage d\'un employe.",0,0);printf("\n");
+     gestion_affichage(c,"|_________________# un tableau des employes #___________________",0,0);printf("\n");
+     gestion_affichage(c,"|3 : la saisie d\'un tableau d\'employes.",0,0);printf("\n");
+	 gestion_affichage(c,"|4 : l\'affichage du tableau d\'employes.",0,0);printf("\n");
+     gestion_affichage(c,"|5 : la moyenne des salaires.",0,0);printf("\n");
+     gestion_affichage(c,"|6 : la moyenne des ages.",0,0);printf("\n");
+     gestion_affichage(c,"|7 : le nombre d\'employes ayant le salaire superieur a 5000 dhs.",0,0);printf("\n");
+     gestion_affichage(c,"|8 : le nombre d\'employes qui ont atteint l\'age de la retraite.",0,0);printf("\n");
+     gestion_affichage(c,"|째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째째",0,0);printf("\n");
+     gestion_affichage(c,"|9 : exite .",0,0);printf("\n");
+     gestion_affichage(c,"|_Donnee un chois :_____________________________________________",0,0);printf("\n");
      scanf("%d",&chois);
 	 system("cls");		
 	}
@@ -256,7 +279,7 @@ int Menu(int *Numbre_employ,employe *Table_employe,employe *Un_employe){
 			break;
 		}
 		case 8:{
-			
+			atteint_age_retraite(Numbre_employ,Table_employe);
 			break;
 		}
 		case 9:{
@@ -268,9 +291,11 @@ int Menu(int *Numbre_employ,employe *Table_employe,employe *Un_employe){
 }
 int main(int argc, char const *argv[])
 {
-    int Numbre_employe=0,Arete=0;
+    int Numbre_employe=0;
     employe Table_employe[max];
     employe Un_employe;
+    
+    int Arete=0;
     while( Arete != 9 ){
     	Arete=Menu(&Numbre_employe,&Table_employe[Numbre_employe],&Un_employe);
 	}
